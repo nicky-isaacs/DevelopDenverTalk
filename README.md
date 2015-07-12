@@ -34,19 +34,19 @@ the call to `loop(acc.size +: acc)` is a right associative operator which prepen
 
 
 
- ###Example 3:
- -----------------------------------------
- This is a subtly modified version of Example 2. Notice the new definition of the inner `loop` method:
- ```scala
- @tailrec
- def loop(acc: ListBuffer[Int] = ListBuffer.empty[Int]): ListBuffer[Int] = {
-   if (size == acc.size) acc
-   else {
-     acc.append(acc.size)
-     loop(acc)
-   }
+###Example 3:
+-----------------------------------------
+This is a subtly modified version of Example 2. Notice the new definition of the inner `loop` method:
+```scala
+@tailrec
+def loop(acc: ListBuffer[Int] = ListBuffer.empty[Int]): ListBuffer[Int] = {
+ if (size == acc.size) acc
+ else {
+   acc.append(acc.size)
+   loop(acc)
  }
- ```
+}
+```
 Instead of prepending to a list and accumulating with an immutable data-structure, we are appending to a mutable structure and passing that up the call stack. Things to think about:
  - What is the difference between a `ListBuffer` and the default `Seq`?
  - Are we subject to concurrent modification?
