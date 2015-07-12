@@ -2,6 +2,18 @@ Immutability: A Tool for Suckers
 ================================
 ####*(And other such blanket statements)*
 
+
+##TODO:
+-------
+ - [ ] Make examples more concrete
+ - [ ] Stick with a single example throughout the talk
+ - [ ] General unifying story
+ - [ ] Does append/prepend bring any value
+ - [ ] Run code examples back to back
+ - [ ] Where (specifically) does the constant come from?
+ - [ ] Make sure to codify the example of "immutability done mutably" or get rid of it
+ - [ ] Cut out snippets of code which are important to talk about
+
 ###Example 1:
 ------------------------------------------
 This is an example of concurrency gone very wrong. Notice that multiple threads are mutating shared memory without any form of synchronization. This leads to non-deterministic and non-sensical behavior. Purely a motivating example as to the benefits of immutability
