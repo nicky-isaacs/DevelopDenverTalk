@@ -1,24 +1,41 @@
 import scala.annotation._
-import scala.collection.mutable._
+import scala.collection.mutable.ListBuffer
 
-val DesiredListSize = 100000
-// A method that takes a number and builds a list of that size
-def buildABigListRecursivly(size: Int): Seq[Int] = {
+val NumberOfShoesDesired = 50000
 
+case class Shoe(brand: String, color: String, size: Float)
+
+val Brands = "Nike" :: "Adidas" :: "Converse" :: "Reebok" :: Nil
+
+val Colors = "red" :: "blue" :: "green" :: "black" :: Nil
+
+
+// A method that returns the most recent n number of shoes
+// from our inventory
+def getShoes(size: Int): Seq[Shoe] = {
   // Inner loop function. For those familiar with Scala, this will be
   // familiar. For other, this finction works just like any other
   // function defined in out class/object, but is only visible inside
-  // "buildABigListRecursivly"
+  // "getShoes"
   @tailrec
-  def loop(acc: ListBuffer[Int] = ListBuffer.empty[Int]): ListBuffer[Int] = {
+  def loop(acc: ListBuffer[Shoe] = ListBuffer.empty[Shoe]): ListBuffer[Shoe] = {
     if (size == acc.size) acc
     else {
-      acc.append(acc.size)
+      acc.prepend(getNextShoe)
       loop(acc)
     }
   }
-
   loop()
+}
+
+
+// Returns the next shoe in the inventory
+def getNextShoe(): Shoe = {
+  Shoe(
+    Brands.randomElement,
+    Colors.randomElement,
+    scala.util.Random.nextInt(14)
+  )
 }
 
 
@@ -32,7 +49,19 @@ def timeBlock[A](body: => A): A = {
   result
 }
 
-println(s"Mutably building a list of size $DesiredListSize")
+println(s"Immutably building a list of $NumberOfShoesDesired shoes")
 timeBlock {
-  buildABigListRecursivly(DesiredListSize)
+  val shoes = getShoes(NumberOfShoesDesired)
+  println(shoes.head)
+}
+
+
+
+implicit class SeqUtils[A](s: Seq[A]) {
+
+  def randomElement(): A = {
+    val index = scala.util.Random.nextInt(s.size)
+    s(index)
+  }
+
 }
