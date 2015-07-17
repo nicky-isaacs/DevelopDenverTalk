@@ -34,7 +34,7 @@ def printWhileLessThan(n: Int): Unit = {
 }
 
 
-// Descriptinve name no?
+// Descriptive name, no?
 def buildBadlyBehavingFuture() = {
   Future {
     printWhileLessThan(15)
