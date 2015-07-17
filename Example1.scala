@@ -16,19 +16,19 @@ implicit val executionContext = ExecutionContext.fromExecutor(
 var myFirstInt = 0
 
 
-def incrimentAndPrint() = {
+def incrementAndPrint() = {
   myFirstInt = myFirstInt + 1
   println(myFirstInt)
   Thread.sleep(1000)
 }
 
 
-// Call incrimentAndPrint while its value is less
+// Call incrementAndPrint while its value is less
 // than n
 @tailrec
 def printWhileLessThan(n: Int): Unit = {
   if (myFirstInt < n) {
-    incrimentAndPrint
+    incrementAndPrint
     printWhileLessThan(n)
   } else ()
 }
