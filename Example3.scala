@@ -49,12 +49,12 @@ def timeBlock[A](body: => A): A = {
   result
 }
 
+
 println(s"Immutably building a list of $NumberOfShoesDesired shoes")
 timeBlock {
   val shoes = getShoes(NumberOfShoesDesired)
   println(shoes.head)
 }
-
 
 
 implicit class SeqUtils[A](s: Seq[A]) {

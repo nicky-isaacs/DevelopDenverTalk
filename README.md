@@ -5,7 +5,7 @@ Immutability: A Tool for Suckers
 
 ##TODO:
 -------
- - [ ] Make examples more concrete
+ - [x] Make examples more concrete
  - [ ] Stick with a single example throughout the talk
  - [ ] General unifying story
  - [ ] Does append/prepend bring any value
