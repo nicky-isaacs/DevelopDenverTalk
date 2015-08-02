@@ -1,39 +1,35 @@
 import scala.annotation._
+import scala.util.Random
+import scala.math._
 
-val NumberOfShoesDesired = 50000
+val DesiredTestSize = 50000
 
-case class Shoe(brand: String, color: String, size: Float)
+case class ServiceCheckResult(name: String, responseTimeInMilliseconds: Long)
 
-val Brands = "Nike" :: "Adidas" :: "Converse" :: "Reebok" :: Nil
+// A method that takes a number and builds a list of that size
+def performChecks(size: Int): Seq[ServiceCheckResult] = {
 
-val Colors = "red" :: "blue" :: "green" :: "black" :: Nil
-
-
-// A method that returns the most recent n number of shoes
-// from our inventory
-def getShoes(size: Int): Seq[Shoe] = {
   // Inner loop function. For those familiar with Scala, this will be
   // familiar. For other, this finction works just like any other
   // function defined in out class/object, but is only visible inside
-  // "getShoes"
+  // "buildABigListRecursivly"
   @tailrec
-  def loop(acc: Seq[Shoe] = Seq.empty[Shoe]): Seq[Shoe] = {
-    if (size == acc.size) acc
-    else {
-      loop(getNextShoe +: acc)
-    }
+  def loop(acc: Seq[ServiceCheckResult] = Seq.empty[ServiceCheckResult]):
+    Seq[ServiceCheckResult] = {
+      if (size == acc.size) acc
+      else {
+        val result = performSingleServiceCheck
+        loop(result +: acc)
+      }
   }
   loop()
 }
 
 
-// Returns the next shoe in the inventory
-def getNextShoe(): Shoe = {
-  Shoe(
-    Brands.randomElement,
-    Colors.randomElement,
-    scala.util.Random.nextInt(14)
-  )
+def performSingleServiceCheck(): ServiceCheckResult = {
+  val host = Random.nextString(1) + "@victorops.com"
+  val time = Math.abs(Random.nextLong()) / 1000L
+  ServiceCheckResult(host, time)
 }
 
 
@@ -43,23 +39,12 @@ def timeBlock[A](body: => A): A = {
   val result = body
   val finishTime = System.currentTimeMillis
   val totalMilliseconds = finishTime - startTime
-  println(s"Block took ${totalMilliseconds/1000.0} seconds to complete")
+  println(s"It took ${totalMilliseconds/1000.0} seconds to collect the results")
   result
 }
 
 
-println(s"Immutably building a list of $NumberOfShoesDesired shoes")
+println(s"Checking the response time of $DesiredTestSize calls to the service")
 timeBlock {
-  val shoes = getShoes(NumberOfShoesDesired)
-  println(shoes.head)
-}
-
-
-implicit class SeqUtils[A](s: Seq[A]) {
-
-  def randomElement(): A = {
-    val index = scala.util.Random.nextInt(s.size)
-    s(index)
-  }
-
+  performChecks(DesiredTestSize)
 }

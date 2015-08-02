@@ -1,4 +1,5 @@
 import scala.annotation._
+import scala.collection.mutable.ListBuffer
 
 val NumberOfShoesDesired = 50000
 
@@ -17,10 +18,11 @@ def getShoes(size: Int): Seq[Shoe] = {
   // function defined in out class/object, but is only visible inside
   // "getShoes"
   @tailrec
-  def loop(acc: Seq[Shoe] = Seq.empty[Shoe]): Seq[Shoe] = {
+  def loop(acc: ListBuffer[Shoe] = ListBuffer.empty[Shoe]): ListBuffer[Shoe] = {
     if (size == acc.size) acc
     else {
-      loop(getNextShoe +: acc)
+      acc.prepend(getNextShoe)
+      loop(acc)
     }
   }
   loop()

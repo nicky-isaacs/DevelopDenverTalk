@@ -19,7 +19,7 @@ var myFirstInt = 0
 def incrementAndPrint() = {
   myFirstInt = myFirstInt + 1
   println(myFirstInt)
-  Thread.sleep(1000)
+  Thread.sleep(100)
 }
 
 
