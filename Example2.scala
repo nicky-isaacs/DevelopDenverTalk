@@ -1,8 +1,9 @@
+import scala.util.Try
 import scala.annotation._
 import scala.util.Random
 import scala.math._
 
-val DesiredTestSize = 50000
+val DesiredTestSize = 10000
 
 case class ServiceCheckResult(name: String, responseTimeInMilliseconds: Long)
 
@@ -22,13 +23,18 @@ def performChecks(size: Int): Seq[ServiceCheckResult] = {
         loop(result +: acc)
       }
   }
-  loop()
+  val result = loop()
+  val networkTime = result.map(_.responseTimeInMilliseconds).sum/1000.0
+  println(s"  - Spent $networkTime seconds waiting for IO")
+  result
 }
 
 
 def performSingleServiceCheck(): ServiceCheckResult = {
   val host = Random.nextString(1) + "@victorops.com"
-  val time = Math.abs(Random.nextLong()) / 1000L
+  val time = Math.abs(Random.nextInt(3))
+  // println(s"Sleeping for $time millis")
+  Try(Thread.sleep(time))
   ServiceCheckResult(host, time)
 }
 
@@ -39,7 +45,7 @@ def timeBlock[A](body: => A): A = {
   val result = body
   val finishTime = System.currentTimeMillis
   val totalMilliseconds = finishTime - startTime
-  println(s"It took ${totalMilliseconds/1000.0} seconds to collect the results")
+  println(s"  - It took ${totalMilliseconds/1000.0} seconds to finish")
   result
 }
 
