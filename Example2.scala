@@ -13,7 +13,7 @@ def performChecks(size: Int): Seq[ServiceCheckResult] = {
   // Inner loop function. For those familiar with Scala, this will be
   // familiar. For other, this finction works just like any other
   // function defined in out class/object, but is only visible inside
-  // "buildABigListRecursivly"
+  // "performChecks()"
   @tailrec
   def loop(acc: Seq[ServiceCheckResult] = Seq.empty[ServiceCheckResult]):
     Seq[ServiceCheckResult] = {

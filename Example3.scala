@@ -50,8 +50,7 @@ def timeBlock[A](body: => A): A = {
 
 println(s"Immutably building a list of $NumberOfShoesDesired shoes")
 timeBlock {
-  val shoes = getShoes(NumberOfShoesDesired)
-  println(shoes.head)
+  getShoes(NumberOfShoesDesired)
 }
 
 
