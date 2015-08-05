@@ -17,8 +17,9 @@ def performChecks(size: Int): Seq[ServiceCheckResult] = {
   @tailrec
   def loop(acc: Seq[ServiceCheckResult] = Seq.empty[ServiceCheckResult]):
     Seq[ServiceCheckResult] = {
-      if (size == acc.size) acc
-      else {
+      if (size == acc.size) {
+        acc
+      } else {
         val result = performSingleServiceCheck
         loop(result +: acc)
       }
@@ -33,7 +34,6 @@ def performChecks(size: Int): Seq[ServiceCheckResult] = {
 def performSingleServiceCheck(): ServiceCheckResult = {
   val host = Random.nextString(1) + "@victorops.com"
   val time = Math.abs(Random.nextInt(3))
-  // println(s"Sleeping for $time millis")
   Try(Thread.sleep(time))
   ServiceCheckResult(host, time)
 }

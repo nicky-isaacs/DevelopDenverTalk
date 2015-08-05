@@ -13,7 +13,7 @@ implicit val executionContext = ExecutionContext.fromExecutor(
 )
 
 
-var myFirstInt = 0
+var myFirstInt: Int = 0
 
 
 def incrementAndPrint() = {
