@@ -5,8 +5,6 @@ import scala.annotation._
 // Lets use 10 threads
 val ThreadCount = 10
 
-val Lock = new Object
-
 // Build a new execution context using a threadpool of
 // size 10
 implicit val executionContext = ExecutionContext.fromExecutor(
