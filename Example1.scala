@@ -5,6 +5,7 @@ import scala.annotation._
 // Lets use 10 threads
 val ThreadCount = 10
 
+val Lock = new Object
 
 // Build a new execution context using a threadpool of
 // size 10
@@ -35,17 +36,16 @@ def printWhileLessThan(n: Int): Unit = {
 
 
 // Descriptive name, no?
-def buildBadlyBehavingFuture() = {
-  Future {
-    printWhileLessThan(15)
-  } onComplete {
-    case _ =>
-      println("Thread complete")
-      System.exit(0) // Exit when I complete
+def buildBadlyBehavingFuture(): Future[Unit] = {
+  val f = Future(printWhileLessThan(15))
+  f onComplete {
+    case _ => println("Thread complete")
   }
+  f
 }
 
 
 // Create ThreadCount number of Futures, which will
 // be executed in the context of our ExecutionContext
-(0 until ThreadCount) foreach(_ => buildBadlyBehavingFuture )
+val futures = (0 until ThreadCount).map(_ => buildBadlyBehavingFuture ).toSeq
+Future.sequence(futures).map(_ => System.exit(0))
